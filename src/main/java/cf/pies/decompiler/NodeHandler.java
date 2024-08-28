@@ -1,4 +1,4 @@
-package cf.pies.decomplie;
+package cf.pies.decompiler;
 
 import me.kuwg.clarity.ast.ASTNode;
 

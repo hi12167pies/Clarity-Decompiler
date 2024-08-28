@@ -1,7 +1,7 @@
-package cf.pies.decomplie.node;
+package cf.pies.decompiler.node;
 
-import cf.pies.decomplie.Code;
-import cf.pies.decomplie.NodeHandler;
+import cf.pies.decompiler.Code;
+import cf.pies.decompiler.NodeHandler;
 import com.google.common.collect.Sets;
 import me.kuwg.clarity.ast.ASTNode;
 import me.kuwg.clarity.ast.nodes.function.declare.ParameterNode;

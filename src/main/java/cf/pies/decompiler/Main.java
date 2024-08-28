@@ -1,6 +1,6 @@
-package cf.pies.decomplie;
+package cf.pies.decompiler;
 
-import cf.pies.decomplie.node.*;
+import cf.pies.decompiler.node.*;
 import me.kuwg.clarity.ast.AST;
 import me.kuwg.clarity.compiler.ASTLoader;
 
