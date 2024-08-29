@@ -23,7 +23,13 @@ public class SaveButtonListener implements ActionListener {
         List<Token> tokens = Tokenizer.tokenize(gui.textArea.getText());
         ASTParser parser = new ASTParser("none", "none", tokens);
 
-        ASTSaver saver = new ASTSaver(parser.parse());
+        ASTSaver saver;
+        try {
+            saver = new ASTSaver(parser.parse());
+        } catch (Exception ex) {
+            gui.showError(ex);
+            return;
+        }
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Save File");
