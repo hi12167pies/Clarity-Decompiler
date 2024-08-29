@@ -32,21 +32,17 @@ public class DropTargetImpl implements DropTargetListener {
     @Override
     public void drop(DropTargetDropEvent dtde) {
         try {
-            // Accept the drop
             dtde.acceptDrop(DnDConstants.ACTION_COPY);
 
-            // Check if the dropped data is a list of files
             if (dtde.getTransferable().isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
-                // Get the dropped files
                 java.util.List<File> droppedFiles = (List<File>) dtde.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
 
-                // Process the files (e.g., display the file paths in the text area)
                 File file = droppedFiles.get(0);
                 if (!file.getName().endsWith(".cclr")) {
                     gui.textArea.setText("Expected cclr file.");
                 } else {
                     gui.currentAst = new ASTLoader(file).load();
-                    gui.astMode();
+                    gui.setMenu(Menu.AST);
                 }
 
                 // Mark the drop as successful
@@ -55,7 +51,7 @@ public class DropTargetImpl implements DropTargetListener {
                 dtde.dropComplete(false);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            gui.showError(ex);
             dtde.dropComplete(false);
         }
     }
