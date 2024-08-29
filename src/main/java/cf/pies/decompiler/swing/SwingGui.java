@@ -3,21 +3,19 @@ package cf.pies.decompiler.swing;
 import cf.pies.decompiler.Code;
 import cf.pies.decompiler.Main;
 import me.kuwg.clarity.ast.AST;
-import sun.swing.text.TextComponentPrintable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.dnd.DropTarget;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.print.Printable;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.io.Writer;
 
 public class SwingGui {
     public AST currentAst = null;
     public JTextArea textArea = new JTextArea();
+    public final JScrollPane scrollPane = new JScrollPane(textArea);
     public JFrame frame = new JFrame("Clarity Decompiler");
 
     public final JButton astBtn = new JButton("AST");
@@ -53,7 +51,6 @@ public class SwingGui {
             }
         });
 
-        JScrollPane scrollPane = new JScrollPane(textArea);
 
         // buttons
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -84,6 +81,7 @@ public class SwingGui {
                     break;
             }
             this.menu = menu;
+            textArea.setCaretPosition(0);
             buttonPanel.remove(saveBtn);
             buttonPanel.updateUI();
             edited = false;
@@ -102,11 +100,18 @@ public class SwingGui {
         Code code = new Code();
         code.nodeHandlers = Main.handlers;
         code.handleNode(currentAst.getRoot());
-        textArea.setText(code.builder.toString());
+        StringBuilder finalCode = new StringBuilder();
+        for (String error : code.errors) {
+            finalCode.append("// ")
+                    .append(error)
+                    .append("\n");
+        }
+        finalCode.append(code.builder.toString());
+        textArea.setText(finalCode.toString());
     }
 
     public void open() {
-        frame.setSize(640, 480);
+        frame.setSize(750, 500);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
@@ -135,7 +140,7 @@ public class SwingGui {
         dialog.add(scrollPane, BorderLayout.CENTER);
         dialog.add(okButton, BorderLayout.SOUTH);
 
-        dialog.setSize(400, 200);
+        dialog.setSize(800, 500);
         dialog.setModal(true);
         dialog.setLocationRelativeTo(null);
 

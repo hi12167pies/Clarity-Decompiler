@@ -10,6 +10,7 @@ public class Code {
     public List<NodeHandler> nodeHandlers = new ArrayList<>();
     public StringBuilder builder = new StringBuilder();
     public int indentAmount = 0;
+    public List<String> errors = new ArrayList<>();
 
     public Code indent() {
         indentAmount++;
@@ -65,7 +66,7 @@ public class Code {
 
             }
         }
-        System.out.println("Unknown node: " + node);
+        errors.add("Unknown node: " + node);
         return this;
     }
 }
