@@ -38,6 +38,9 @@ public class SaveButtonListener implements ActionListener {
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
+            if (!file.getName().endsWith(".cclr")) {
+                file = new File(file.getAbsolutePath() + ".cclr");
+            }
             try {
                 saver.save(file);
             } catch (IOException ex) {
