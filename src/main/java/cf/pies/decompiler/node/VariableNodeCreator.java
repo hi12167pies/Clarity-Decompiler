@@ -28,6 +28,12 @@ public class VariableNodeCreator implements NodeHandler {
     public void handle(ASTNode _node, Code code) {
         if (_node instanceof VariableDeclarationNode) {
             VariableDeclarationNode node = (VariableDeclarationNode) _node;
+            if (node.isStatic()) {
+                code.append("static ");
+            }
+            if (node.isConstant()) {
+                code.append("const ");
+            }
             code.append("var ")
                     .append(node.getName());
 
