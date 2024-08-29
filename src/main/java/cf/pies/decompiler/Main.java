@@ -1,38 +1,23 @@
 package cf.pies.decompiler;
 
 import cf.pies.decompiler.node.*;
-import me.kuwg.clarity.ast.AST;
-import me.kuwg.clarity.compiler.ASTLoader;
+import cf.pies.decompiler.swing.SwingGui;
+import com.google.common.collect.Lists;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.List;
 
 public class Main {
+    public static List<NodeHandler> handlers = Lists.newArrayList(
+            new BlockNodeCreator(),
+            new FunctionNodeCreator(),
+            new NativeNodeCreator(),
+            new VariableNodeCreator(),
+            new BinaryExpressionCreator(),
+            new LiteralNodeCreator(),
+            new ClassNodeCreator()
+    );
+
     public static void main(String[] args) {
-        ASTLoader loader = new ASTLoader(new File("tests/test.cclr"));
-
-        try {
-            AST ast = loader.load();
-
-            Code code = new Code();
-
-            code.addNodeHandlers(
-                    new BlockNodeCreator(),
-                    new FunctionNodeCreator(),
-                    new NativeNodeCreator(),
-                    new VariableNodeCreator(),
-                    new BinaryExpressionCreator(),
-                    new LiteralNodeCreator(),
-                    new ClassNodeCreator()
-            );
-
-            code.handleNode(ast.getRoot());
-
-//            System.out.println(ast);
-            System.out.println(code.builder.toString());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        new SwingGui().open();
     }
 }
