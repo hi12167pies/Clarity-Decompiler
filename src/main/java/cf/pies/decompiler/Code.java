@@ -51,10 +51,6 @@ public class Code {
         return this;
     }
 
-    public void addNodeHandlers(NodeHandler... handlers) {
-        nodeHandlers.addAll(Arrays.asList(handlers));
-    }
-
     public Code handleNode(ASTNode node) {
         for (NodeHandler nodeHandler : nodeHandlers) {
             for (Class<?> supportedNode : nodeHandler.getSupportedNodes()) {
