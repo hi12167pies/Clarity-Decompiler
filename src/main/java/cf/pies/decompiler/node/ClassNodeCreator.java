@@ -28,6 +28,10 @@ public class ClassNodeCreator implements NodeHandler {
 
             code.newLine().indent();
 
+            if (node.getConstructor() != null) {
+                code.handleNode(node.getConstructor());
+            }
+
             code.handleNode(node.getBody());
 
             code.removeIndent();

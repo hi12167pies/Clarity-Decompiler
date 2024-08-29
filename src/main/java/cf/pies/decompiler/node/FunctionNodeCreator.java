@@ -31,7 +31,10 @@ public class FunctionNodeCreator implements NodeHandler {
             String name = node.getFunctionName();
             List<ParameterNode> parameters = node.getParameterNodes();
 
-            code.append("fn ")
+            if (!name.equals("constructor")) {
+                code.append("fn ");
+            }
+            code
                     .append(name)
                     .append("(")
                     .appendParams(parameters)

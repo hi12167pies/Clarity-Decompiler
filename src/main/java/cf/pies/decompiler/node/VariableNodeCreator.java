@@ -5,6 +5,7 @@ import cf.pies.decompiler.NodeHandler;
 import com.google.common.collect.Sets;
 import me.kuwg.clarity.ast.ASTNode;
 import me.kuwg.clarity.ast.nodes.literal.VoidNode;
+import me.kuwg.clarity.ast.nodes.variable.assign.LocalVariableReassignmentNode;
 import me.kuwg.clarity.ast.nodes.variable.assign.VariableDeclarationNode;
 import me.kuwg.clarity.ast.nodes.variable.assign.VariableReassignmentNode;
 import me.kuwg.clarity.ast.nodes.variable.get.VariableReferenceNode;
@@ -18,7 +19,8 @@ public class VariableNodeCreator implements NodeHandler {
         return Sets.newHashSet(
                 VariableDeclarationNode.class,
                 VariableReferenceNode.class,
-                VariableReassignmentNode.class
+                VariableReassignmentNode.class,
+                LocalVariableReassignmentNode.class
         );
     }
 
@@ -45,7 +47,15 @@ public class VariableNodeCreator implements NodeHandler {
         if (_node instanceof VariableReassignmentNode) {
             VariableReassignmentNode node = (VariableReassignmentNode) _node;
 
-            code.append(node.getName() + " = ")
+            code.append(node.getName()).append(" = ")
+                    .handleNode(node.getValue())
+                    .newLine();
+        }
+
+        if (_node instanceof LocalVariableReassignmentNode) {
+            LocalVariableReassignmentNode node = (LocalVariableReassignmentNode) _node;
+
+            code.append("local.").append(node.getName()).append(" = ")
                     .handleNode(node.getValue())
                     .newLine();
         }
