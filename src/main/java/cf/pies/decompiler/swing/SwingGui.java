@@ -29,6 +29,8 @@ public class SwingGui {
     public SwingGui() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        textArea.setFont(new Font("Consolas", Font.PLAIN, 12));
+        textArea.setTabSize(4);
         textArea.setText("Drag and drop files here.");
         textArea.addKeyListener(new KeyListener() {
             @Override
