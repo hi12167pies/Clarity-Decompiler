@@ -43,7 +43,6 @@ public class SaveButtonListener implements ActionListener {
             } catch (IOException ex) {
                 gui.showError(ex);
             }
-        } else {
         }
     }
 }
