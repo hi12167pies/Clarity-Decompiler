@@ -30,7 +30,7 @@ public class ASTViewMenu extends Menu {
     public void update(SwingGui gui) {
         AST ast = gui.getData().ast;
         if (ast == null) {
-            textArea.setText("No file selected");
+            textArea.setText("No file selected.");
         } else {
             StringBuilder astTree = new StringBuilder();
             ast.getRoot().print(astTree, "");
