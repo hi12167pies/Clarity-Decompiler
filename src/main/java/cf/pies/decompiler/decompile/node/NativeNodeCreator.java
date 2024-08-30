@@ -28,7 +28,7 @@ public class NativeNodeCreator implements NodeHandler {
                     .append("(")
                     .appendParams(node.getParams())
                     .append(")")
-                    .newLine();
+                    .assumeNewLine();
         }
 
         if (_node instanceof PackagedNativeFunctionCallNode) {
@@ -41,7 +41,7 @@ public class NativeNodeCreator implements NodeHandler {
                     .append("(")
                     .appendParams(node.getParams())
                     .append(")")
-                    .newLine();
+                    .assumeNewLine();
         }
     }
 }

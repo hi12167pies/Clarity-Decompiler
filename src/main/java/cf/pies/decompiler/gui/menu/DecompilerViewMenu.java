@@ -34,7 +34,7 @@ public class DecompilerViewMenu extends Menu {
         if (ast == null) {
             textArea.setText("No file selected.");
         } else {
-            CodeDecompiler decompiler = new CodeDecompiler();
+            CodeDecompiler decompiler = new CodeDecompiler(gui.getData());
             decompiler.setNodeHandlers(Main.getDefaultNodeHandlers());
             decompiler.handleNode(ast.getRoot());
             textArea.setText(decompiler.getCode());

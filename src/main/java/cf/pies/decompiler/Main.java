@@ -5,6 +5,7 @@ import cf.pies.decompiler.decompile.node.*;
 import cf.pies.decompiler.gui.SwingGui;
 import cf.pies.decompiler.gui.menu.ASTViewMenu;
 import cf.pies.decompiler.gui.menu.DecompilerViewMenu;
+import cf.pies.decompiler.gui.menu.settings.SettingsMenu;
 import cf.pies.decompiler.gui.menu.file.FileSelectionMenu;
 import com.google.common.collect.Lists;
 
@@ -34,6 +35,7 @@ public class Main {
         gui.addMenu(new FileSelectionMenu());
         gui.addMenu(new ASTViewMenu());
         gui.addMenu(new DecompilerViewMenu());
+        gui.addMenu(new SettingsMenu());
 
         gui.open();
     }

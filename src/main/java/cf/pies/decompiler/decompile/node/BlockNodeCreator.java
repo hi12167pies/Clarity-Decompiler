@@ -35,7 +35,9 @@ public class BlockNodeCreator implements NodeHandler {
 
         if (_node instanceof ReturnNode) {
             ReturnNode node = (ReturnNode) _node;
-            code.append("return ").handleNode(node.getValue()).newLine();
+            code.append("return ")
+                    .handleNode(node.getValue())
+                    .assumeNewLine();
         }
     }
 }

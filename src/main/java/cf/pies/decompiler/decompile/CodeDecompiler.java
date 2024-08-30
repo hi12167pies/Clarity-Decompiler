@@ -1,5 +1,7 @@
 package cf.pies.decompiler.decompile;
 
+import cf.pies.decompiler.gui.GuiData;
+import cf.pies.decompiler.gui.menu.settings.DecompilerLineSetting;
 import me.kuwg.clarity.ast.ASTNode;
 
 import java.util.ArrayList;
@@ -7,6 +9,12 @@ import java.util.List;
 
 @SuppressWarnings("UnusedReturnValue")
 public class CodeDecompiler {
+    private final GuiData guiData;
+
+    public CodeDecompiler(GuiData guiData) {
+        this.guiData = guiData;
+    }
+
     private List<NodeHandler> nodeHandlers = new ArrayList<>();
     private int indentAmount = 0;
     private final StringBuilder builder = new StringBuilder();
@@ -14,14 +22,6 @@ public class CodeDecompiler {
 
     public void setNodeHandlers(List<NodeHandler> nodeHandlers) {
         this.nodeHandlers = nodeHandlers;
-    }
-
-    public List<DecompileError> getErrors() {
-        return errors;
-    }
-
-    public StringBuilder getBuilder() {
-        return builder;
     }
 
     public String getCode() {
@@ -38,7 +38,8 @@ public class CodeDecompiler {
                     .append(error)
                     .append("\n");
         }
-        return builder.toString();
+        finalString.append(builder);
+        return finalString.toString();
     }
 
     public CodeDecompiler indent() {
@@ -72,6 +73,16 @@ public class CodeDecompiler {
         return this;
     }
 
+    /**
+     * This will assume a new line, this will be here for if the line numbers get obfuscated
+     */
+    public CodeDecompiler assumeNewLine() {
+        if (guiData.getLineSetting() == DecompilerLineSetting.LineSetting.ASSUMED) {
+            newLine();
+        }
+        return this;
+    }
+
     public CodeDecompiler newLine() {
         builder.append("\n");
         for (int i = 0; i < indentAmount; i++) {
@@ -80,7 +91,12 @@ public class CodeDecompiler {
         return this;
     }
 
+    public int previousLine = 0;
     public CodeDecompiler handleNode(ASTNode node) {
+        if (previousLine != node.getLine() && guiData.getLineSetting() == DecompilerLineSetting.LineSetting.AST) {
+            newLine();
+        }
+        previousLine = node.getLine();
         for (NodeHandler nodeHandler : nodeHandlers) {
             for (Class<?> supportedNode : nodeHandler.getSupportedNodes()) {
 

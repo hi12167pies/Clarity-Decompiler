@@ -63,7 +63,7 @@ public class FunctionNodeCreator implements NodeHandler {
                     .append("(")
                     .appendParams(node.getParams())
                     .append(")")
-                    .newLine();
+                    .assumeNewLine();
         }
 
         if (_node instanceof ObjectFunctionCallNode) {
@@ -73,7 +73,7 @@ public class FunctionNodeCreator implements NodeHandler {
                     .append("(")
                     .appendParams(node.getParams())
                     .append(")")
-                    .newLine();
+                    .assumeNewLine();
         }
     }
 }

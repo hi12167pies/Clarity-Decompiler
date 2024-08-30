@@ -46,7 +46,7 @@ public class ClassNodeCreator implements NodeHandler {
                     .append("(")
                     .appendParams(node.getParams())
                     .append(")")
-                    .newLine();
+                    .assumeNewLine();
         }
     }
 }

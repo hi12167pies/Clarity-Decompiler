@@ -38,7 +38,7 @@ public class VariableNodeCreator implements NodeHandler {
                     .append(node.getName());
 
             if (node.getValue() instanceof VoidNode) {
-                code.newLine();
+                code.assumeNewLine();
             } else {
                 code.append(" = ")
                         .handleNode(node.getValue());
@@ -55,7 +55,7 @@ public class VariableNodeCreator implements NodeHandler {
 
             code.append(node.getName()).append(" = ")
                     .handleNode(node.getValue())
-                    .newLine();
+                    .assumeNewLine();
         }
 
         if (_node instanceof LocalVariableReassignmentNode) {
@@ -63,7 +63,7 @@ public class VariableNodeCreator implements NodeHandler {
 
             code.append("local.").append(node.getName()).append(" = ")
                     .handleNode(node.getValue())
-                    .newLine();
+                    .assumeNewLine();
         }
     }
 }
