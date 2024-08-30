@@ -40,11 +40,11 @@ public class FunctionNodeCreator implements NodeHandler {
                     .appendParams(parameters)
                     .append(") {");
 
-            code.newLine().indent();
+            code.assumeNewLine().indent();
             code.handleNode(node.getBlock());
             code.removeIndent();
 
-            code.append("}").newLine();
+            code.newLine().append("}").assumeNewLine();
         }
 
         if (_node instanceof LocalFunctionCallNode) {

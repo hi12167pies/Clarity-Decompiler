@@ -26,7 +26,7 @@ public class ClassNodeCreator implements NodeHandler {
             code.append("class ").append(node.getName())
                     .append(" {");
 
-            code.newLine().indent();
+            code.assumeNewLine().indent();
 
             if (node.getConstructor() != null) {
                 code.handleNode(node.getConstructor());
@@ -35,7 +35,7 @@ public class ClassNodeCreator implements NodeHandler {
             code.handleNode(node.getBody());
 
             code.removeIndent();
-            code.append("}").newLine();
+            code.newLine().append("}").assumeNewLine();
         }
 
         if (_node instanceof ClassInstantiationNode) {
