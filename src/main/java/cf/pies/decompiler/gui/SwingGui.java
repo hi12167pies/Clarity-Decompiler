@@ -34,7 +34,11 @@ public class SwingGui {
         tabs.addChangeListener(event -> {
             if (menus.size() <= tabs.getSelectedIndex()) return;
             Menu menu = menus.get(tabs.getSelectedIndex());
-            menu.update(this);
+            try {
+                menu.update(this);
+            } catch (Exception e) {
+                showError(e);
+            }
         });
 
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -90,6 +94,10 @@ public class SwingGui {
      * Shows a dialog with the stacktrace from an error
      */
     public void showError(Exception exception) {
+        // Also print to console
+        exception.printStackTrace(System.out);
+
+        // Print to dialog
         StringWriter stringWriter = new StringWriter();
         PrintWriter writer = new PrintWriter(stringWriter);
         exception.printStackTrace(writer);
