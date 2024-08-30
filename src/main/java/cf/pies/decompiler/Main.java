@@ -12,7 +12,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 public class Main {
-    private static List<NodeHandler> handlers = Lists.newArrayList(
+    private static final List<NodeHandler> handlers = Lists.newArrayList(
             new BlockNodeCreator(),
             new FunctionNodeCreator(),
             new NativeNodeCreator(),
