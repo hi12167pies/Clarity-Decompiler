@@ -19,7 +19,9 @@ public class Main {
             new VariableNodeCreator(),
             new BinaryExpressionCreator(),
             new LiteralNodeCreator(),
-            new ClassNodeCreator()
+            new ClassNodeCreator(),
+            new IncludeNodeCreator(),
+            new StatementNodeCreator()
     );
 
     /**

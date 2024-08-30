@@ -91,6 +91,17 @@ public class CodeDecompiler {
         return this;
     }
 
+    public void openBlock() {
+        append(" {").assumeNewLine().indent();
+    }
+
+    public void closeBlock() {
+        removeIndent().
+                newLine()
+                .append("}")
+                .assumeNewLine();
+    }
+
     public int previousLine = 0;
     public CodeDecompiler handleNode(ASTNode node) {
         if (node == null) {

@@ -5,6 +5,7 @@ import cf.pies.decompiler.decompile.NodeHandler;
 import com.google.common.collect.Sets;
 import me.kuwg.clarity.ast.ASTNode;
 import me.kuwg.clarity.ast.nodes.function.declare.ParameterNode;
+import me.kuwg.clarity.ast.nodes.literal.DecimalNode;
 import me.kuwg.clarity.ast.nodes.literal.IntegerNode;
 import me.kuwg.clarity.ast.nodes.literal.LiteralNode;
 
@@ -16,7 +17,8 @@ public class LiteralNodeCreator implements NodeHandler {
         return Sets.newHashSet(
                 LiteralNode.class,
                 ParameterNode.class,
-                IntegerNode.class
+                IntegerNode.class,
+                DecimalNode.class
         );
     }
 
@@ -34,6 +36,11 @@ public class LiteralNodeCreator implements NodeHandler {
 
         if (_node instanceof IntegerNode) {
             IntegerNode node = (IntegerNode) _node;
+            code.append(String.valueOf(node.getValue()));
+        }
+
+        if (_node instanceof DecimalNode) {
+            DecimalNode node = (DecimalNode) _node;
             code.append(String.valueOf(node.getValue()));
         }
     }

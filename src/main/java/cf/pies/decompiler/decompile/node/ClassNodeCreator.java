@@ -6,6 +6,7 @@ import com.google.common.collect.Sets;
 import me.kuwg.clarity.ast.ASTNode;
 import me.kuwg.clarity.ast.nodes.clazz.ClassDeclarationNode;
 import me.kuwg.clarity.ast.nodes.clazz.ClassInstantiationNode;
+import me.kuwg.clarity.ast.nodes.clazz.NativeClassDeclarationNode;
 
 import java.util.Set;
 
@@ -14,7 +15,8 @@ public class ClassNodeCreator implements NodeHandler {
     public Set<Class<?>> getSupportedNodes() {
         return Sets.newHashSet(
                 ClassDeclarationNode.class,
-                ClassInstantiationNode.class
+                ClassInstantiationNode.class,
+                NativeClassDeclarationNode.class
         );
     }
 
@@ -24,9 +26,7 @@ public class ClassNodeCreator implements NodeHandler {
             ClassDeclarationNode node = (ClassDeclarationNode) _node;
 
             code.append("class ").append(node.getName())
-                    .append(" {");
-
-            code.assumeNewLine().indent();
+                    .openBlock();
 
             if (node.getConstructor() != null) {
                 code.handleNode(node.getConstructor());
@@ -34,8 +34,22 @@ public class ClassNodeCreator implements NodeHandler {
 
             code.handleNode(node.getBody());
 
-            code.removeIndent();
-            code.newLine().append("}").assumeNewLine();
+            code.closeBlock();
+        }
+
+        if (_node instanceof NativeClassDeclarationNode) {
+            NativeClassDeclarationNode node = (NativeClassDeclarationNode) _node;
+
+            code.append("class native ").append(node.getName())
+                    .openBlock();
+
+            if (node.getConstructor() != null) {
+                code.handleNode(node.getConstructor());
+            }
+
+            code.handleNode(node.getBody());
+
+            code.closeBlock();
         }
 
         if (_node instanceof ClassInstantiationNode) {

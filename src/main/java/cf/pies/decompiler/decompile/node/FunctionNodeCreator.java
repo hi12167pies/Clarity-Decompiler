@@ -9,6 +9,7 @@ import me.kuwg.clarity.ast.nodes.function.call.LocalFunctionCallNode;
 import me.kuwg.clarity.ast.nodes.function.call.ObjectFunctionCallNode;
 import me.kuwg.clarity.ast.nodes.function.declare.FunctionDeclarationNode;
 import me.kuwg.clarity.ast.nodes.function.declare.ParameterNode;
+import me.kuwg.clarity.ast.nodes.function.declare.ReflectedNativeFunctionDeclaration;
 
 import java.util.List;
 import java.util.Set;
@@ -20,12 +21,27 @@ public class FunctionNodeCreator implements NodeHandler {
                 FunctionDeclarationNode.class,
                 LocalFunctionCallNode.class,
                 FunctionCallNode.class,
-                ObjectFunctionCallNode.class
+                ObjectFunctionCallNode.class,
+                ReflectedNativeFunctionDeclaration.class
         );
     }
 
     @Override
     public void handle(ASTNode _node, CodeDecompiler code) {
+        if (_node instanceof ReflectedNativeFunctionDeclaration) {
+            ReflectedNativeFunctionDeclaration node = (ReflectedNativeFunctionDeclaration) _node;
+
+            if (node.isStatic()) {
+                code.append("static ");
+            }
+
+            code.append("native fn ")
+                    .append(node.getName())
+                    .append("(")
+                    .appendParams(node.getParams())
+                    .append(")");
+        }
+
         if (_node instanceof FunctionDeclarationNode) {
             FunctionDeclarationNode node = (FunctionDeclarationNode) _node;
             String name = node.getFunctionName();
@@ -38,13 +54,12 @@ public class FunctionNodeCreator implements NodeHandler {
                     .append(name)
                     .append("(")
                     .appendParams(parameters)
-                    .append(") {");
+                    .append(")")
+                    .openBlock();
 
-            code.assumeNewLine().indent();
             code.handleNode(node.getBlock());
-            code.removeIndent();
 
-            code.newLine().append("}").assumeNewLine();
+            code.closeBlock();
         }
 
         if (_node instanceof LocalFunctionCallNode) {
