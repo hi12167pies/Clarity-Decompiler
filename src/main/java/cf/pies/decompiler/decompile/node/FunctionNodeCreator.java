@@ -1,7 +1,7 @@
-package cf.pies.decompiler.node;
+package cf.pies.decompiler.decompile.node;
 
-import cf.pies.decompiler.Code;
-import cf.pies.decompiler.NodeHandler;
+import cf.pies.decompiler.decompile.CodeDecompiler;
+import cf.pies.decompiler.decompile.NodeHandler;
 import com.google.common.collect.Sets;
 import me.kuwg.clarity.ast.ASTNode;
 import me.kuwg.clarity.ast.nodes.function.call.FunctionCallNode;
@@ -25,7 +25,7 @@ public class FunctionNodeCreator implements NodeHandler {
     }
 
     @Override
-    public void handle(ASTNode _node, Code code) {
+    public void handle(ASTNode _node, CodeDecompiler code) {
         if (_node instanceof FunctionDeclarationNode) {
             FunctionDeclarationNode node = (FunctionDeclarationNode) _node;
             String name = node.getFunctionName();
