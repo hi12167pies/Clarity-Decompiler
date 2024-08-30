@@ -118,7 +118,7 @@ public class SwingGui {
         dialog.add(scrollPane, BorderLayout.CENTER);
         dialog.add(okButton, BorderLayout.SOUTH);
 
-        dialog.setSize(800, 500);
+        dialog.setSize(600, 300);
         dialog.setModal(true);
         dialog.setLocationRelativeTo(null);
 

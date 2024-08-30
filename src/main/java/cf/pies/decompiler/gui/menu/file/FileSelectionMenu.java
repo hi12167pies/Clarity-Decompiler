@@ -12,18 +12,23 @@ import java.awt.dnd.DropTarget;
 import java.io.File;
 
 public class FileSelectionMenu extends Menu {
+    private final JButton button = new JButton("Click to select file (or drag into area)");
+
     @Override
     public String getName() {
         return "File selection";
+    }
+
+    public JButton getButton() {
+        return button;
     }
 
     @Override
     protected void createPanel(SwingGui gui) {
         panel.setLayout(new GridLayout());
 
-        JButton button = new JButton("Click to select file (or drag into area)");
 
-        new DropTarget(button, new FileSelectionDragListener(gui, this, button));
+        new DropTarget(button, new FileSelectionDragListener(gui, this));
 
         button.addActionListener(event -> {
             JFileChooser fileChooser = new JFileChooser();
@@ -42,6 +47,10 @@ public class FileSelectionMenu extends Menu {
 
     public void setFile(SwingGui gui, File file) {
         try {
+            if (!file.getName().endsWith(".cclr")) {
+                gui.showDialog("File selection", "File must be a .cclr file.");
+                return;
+            }
             ASTLoader loader = new ASTLoader(file);
             AST ast = loader.load();
 

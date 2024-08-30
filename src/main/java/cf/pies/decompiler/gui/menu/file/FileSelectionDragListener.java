@@ -2,7 +2,6 @@ package cf.pies.decompiler.gui.menu.file;
 
 import cf.pies.decompiler.gui.SwingGui;
 
-import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.dnd.*;
 import java.io.File;
@@ -11,14 +10,12 @@ import java.util.List;
 public class FileSelectionDragListener implements DropTargetListener {
     private final SwingGui gui;
     private final FileSelectionMenu menu;
-    private final JButton button;
     private final String defaultText;
 
-    public FileSelectionDragListener(SwingGui gui, FileSelectionMenu menu, JButton button) {
+    public FileSelectionDragListener(SwingGui gui, FileSelectionMenu menu) {
         this.gui = gui;
         this.menu = menu;
-        this.button = button;
-        this.defaultText = button.getText();
+        this.defaultText = menu.getButton().getText();
     }
 
     @Override
@@ -38,7 +35,7 @@ public class FileSelectionDragListener implements DropTargetListener {
             }
 
             File file = files.get(0);
-            button.setText("Select file: " + file.getName());
+            menu.getButton().setText("Select file: " + file.getName());
         } catch (Exception e) {
             gui.showError(e);
         }
@@ -50,13 +47,13 @@ public class FileSelectionDragListener implements DropTargetListener {
 
     @Override
     public void dragExit(DropTargetEvent event) {
-        button.setText(defaultText);
+        menu.getButton().setText(defaultText);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void drop(DropTargetDropEvent event) {
-        button.setText(defaultText);
+        menu.getButton().setText(defaultText);
         try {
             if (!event.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) return;
             event.acceptDrop(DnDConstants.ACTION_COPY);
