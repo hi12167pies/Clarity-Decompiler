@@ -1,7 +1,8 @@
 package cf.pies.decompiler.decompile;
 
 import cf.pies.decompiler.gui.GuiData;
-import cf.pies.decompiler.gui.menu.settings.DecompilerLineSetting;
+import cf.pies.decompiler.gui.menu.settings.impl.DecompilerLineSetting;
+import com.google.common.base.Strings;
 import me.kuwg.clarity.ast.ASTNode;
 
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class CodeDecompiler {
      * This will assume a new line, this will be here for if the line numbers get obfuscated
      */
     public CodeDecompiler assumeNewLine() {
-        if (guiData.getLineSetting() == DecompilerLineSetting.LineSetting.ASSUMED) {
+        if (guiData.decompileLineSetting == DecompilerLineSetting.LineSetting.ASSUMED) {
             newLine();
         }
         return this;
@@ -85,6 +86,11 @@ public class CodeDecompiler {
 
     public CodeDecompiler newLine() {
         builder.append("\n");
+        if (guiData.decompileShowLines) {
+            builder.append("/# Line ")
+                    .append(Strings.padStart(String.valueOf(previousLine), 3, ' '))
+                    .append(" #/ ");
+        }
         for (int i = 0; i < indentAmount; i++) {
             builder.append("\t");
         }
@@ -108,10 +114,13 @@ public class CodeDecompiler {
             errors.add(new DecompileError("Node is null"));
             return this;
         }
-        if (previousLine != node.getLine() && guiData.getLineSetting() == DecompilerLineSetting.LineSetting.AST) {
+
+        if (previousLine != node.getLine() && guiData.decompileLineSetting == DecompilerLineSetting.LineSetting.AST) {
             newLine();
         }
+
         previousLine = node.getLine();
+
         for (NodeHandler nodeHandler : nodeHandlers) {
             for (Class<?> supportedNode : nodeHandler.getSupportedNodes()) {
 

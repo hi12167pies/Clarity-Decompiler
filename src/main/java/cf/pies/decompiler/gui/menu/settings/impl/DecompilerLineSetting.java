@@ -1,6 +1,7 @@
-package cf.pies.decompiler.gui.menu.settings;
+package cf.pies.decompiler.gui.menu.settings.impl;
 
 import cf.pies.decompiler.gui.SwingGui;
+import cf.pies.decompiler.gui.menu.settings.Setting;
 import com.google.common.collect.Lists;
 
 import javax.swing.*;
@@ -23,22 +24,24 @@ public class DecompilerLineSetting implements Setting {
     }
 
     @Override
+    public String getName() {
+        return "Decompiler new lines";
+    }
+
+    @Override
     public void addToGui(SwingGui gui, JPanel panel) {
         // ast lines
-        JLabel label = new JLabel("Decompiled new lines");
-        panel.add(label);
 
         JComboBox<String> astLinesBox = new JComboBox<>();
         for (LineSetting value : LineSetting.values()) {
             astLinesBox.addItem(value.getDescription());
         }
         List<LineSetting> settings = Lists.newArrayList(LineSetting.values());
-        int selected = settings.indexOf(gui.getData().getLineSetting());
+        int selected = settings.indexOf(gui.getData().decompileLineSetting);
         astLinesBox.setSelectedIndex(selected);
 
         astLinesBox.addActionListener(event -> {
-            LineSetting setting = LineSetting.values()[astLinesBox.getSelectedIndex()];
-            gui.getData().setLineSetting(setting);
+            gui.getData().decompileLineSetting = LineSetting.values()[astLinesBox.getSelectedIndex()];
         });
 
         panel.add(astLinesBox);

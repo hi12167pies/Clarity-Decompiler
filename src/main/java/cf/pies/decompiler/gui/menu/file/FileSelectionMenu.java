@@ -54,8 +54,8 @@ public class FileSelectionMenu extends Menu {
             ASTLoader loader = new ASTLoader(file);
             AST ast = loader.load();
 
-            gui.getData().setFile(file);
-            gui.getData().setAst(ast);
+            gui.getData().file = file;
+            gui.getData().ast = ast;
 
             // Open AST View
             gui.getTabs().setSelectedIndex(1);

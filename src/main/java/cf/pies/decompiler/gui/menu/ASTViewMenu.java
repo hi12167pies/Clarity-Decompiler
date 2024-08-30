@@ -28,7 +28,7 @@ public class ASTViewMenu extends Menu {
 
     @Override
     public void update(SwingGui gui) {
-        AST ast = gui.getData().getAst();
+        AST ast = gui.getData().ast;
         if (ast == null) {
             textArea.setText("No file selected");
         } else {
