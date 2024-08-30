@@ -35,7 +35,7 @@ public class CodeDecompiler {
                 finalString.append("// Error: ");
             }
             finalString
-                    .append(error)
+                    .append(error.getDescription())
                     .append("\n");
         }
         finalString.append(builder);
@@ -93,6 +93,10 @@ public class CodeDecompiler {
 
     public int previousLine = 0;
     public CodeDecompiler handleNode(ASTNode node) {
+        if (node == null) {
+            errors.add(new DecompileError("Node is null"));
+            return this;
+        }
         if (previousLine != node.getLine() && guiData.getLineSetting() == DecompilerLineSetting.LineSetting.AST) {
             newLine();
         }
