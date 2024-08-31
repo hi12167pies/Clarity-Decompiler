@@ -74,7 +74,7 @@ public class FunctionNodeCreator implements NodeDecompileHandler {
         if (_node instanceof FunctionCallNode) {
             FunctionCallNode node = (FunctionCallNode) _node;
 
-            code.append(node.getName())
+            code.handleNode(node.getCaller())
                     .append("(")
                     .appendParams(node.getParams())
                     .append(")")

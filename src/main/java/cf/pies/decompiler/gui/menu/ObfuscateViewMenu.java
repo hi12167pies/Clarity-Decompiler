@@ -28,15 +28,17 @@ public class ObfuscateViewMenu extends Menu {
             }
             try {
                 ASTObfuscator obfuscator = new ASTObfuscator(ast);
+                obfuscator.obfuscate();
 
                 if (obfuscator.getErrors().isEmpty()) {
                     gui.showDialog("Obfuscator", "AST obfuscated.");
 
                 } else {
                     StringBuilder result = new StringBuilder();
-                    result.append(obfuscator.getErrors().size()).append(" errors occurred while obfuscating AST.");
+                    result.append("AST obfuscated.\n")
+                            .append(obfuscator.getErrors().size()).append(" errors occurred while obfuscating AST.\n\n");
                     for (NodeError error : obfuscator.getErrors()) {
-                        result.append("Error: ").append(error.getDescription());
+                        result.append("Error: ").append(error.getDescription()).append("\n");
                     }
 
                     gui.showDialog("Obfuscator", result.toString());
