@@ -32,8 +32,10 @@ public class DecompilerViewMenu extends Menu {
         AST ast = gui.getData().ast;
 
         if (ast == null) {
+            textArea.setEditable(false);
             textArea.setText("No file selected.");
         } else {
+            textArea.setEditable(true);
             CodeDecompiler decompiler = new CodeDecompiler(gui.getData());
             decompiler.setNodeHandlers(Main.getDefaultNodeHandlers());
             decompiler.handleNode(ast.getRoot());
