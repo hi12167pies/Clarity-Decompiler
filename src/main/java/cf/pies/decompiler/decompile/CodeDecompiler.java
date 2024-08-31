@@ -1,5 +1,6 @@
 package cf.pies.decompiler.decompile;
 
+import cf.pies.decompiler.NodeError;
 import cf.pies.decompiler.gui.GuiData;
 import cf.pies.decompiler.gui.menu.settings.impl.DecompilerLineSetting;
 import com.google.common.base.Strings;
@@ -19,7 +20,7 @@ public class CodeDecompiler {
     private List<NodeDecompileHandler> nodeHandlers = new ArrayList<>();
     private int indentAmount = 0;
     private final StringBuilder builder = new StringBuilder();
-    private final List<DecompileError> errors = new ArrayList<>();
+    private final List<NodeError> errors = new ArrayList<>();
 
     public void setNodeHandlers(List<NodeDecompileHandler> nodeHandlers) {
         this.nodeHandlers = nodeHandlers;
@@ -27,7 +28,7 @@ public class CodeDecompiler {
 
     public String getCode() {
         StringBuilder finalString = new StringBuilder();
-        for (DecompileError error : errors) {
+        for (NodeError error : errors) {
             if (error.getNode() != null) {
                 finalString.append("// Error at line ")
                         .append(error.getNode().getLine())
@@ -111,7 +112,7 @@ public class CodeDecompiler {
     public int previousLine = 0;
     public CodeDecompiler handleNode(ASTNode node) {
         if (node == null) {
-            errors.add(new DecompileError("Node is null"));
+            errors.add(new NodeError("Node is null"));
             return this;
         }
 
@@ -131,7 +132,7 @@ public class CodeDecompiler {
 
             }
         }
-        errors.add(new DecompileError("Unknown node: " + node, node));
+        errors.add(new NodeError("Unknown node: " + node, node));
         return this;
     }
 }

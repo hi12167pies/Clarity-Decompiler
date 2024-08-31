@@ -1,18 +1,18 @@
-package cf.pies.decompiler.decompile;
+package cf.pies.decompiler;
 
 import me.kuwg.clarity.ast.ASTNode;
 
 import javax.annotation.Nullable;
 
-public class DecompileError {
+public class NodeError {
     private final ASTNode node;
     private final String description;
 
-    public DecompileError(String description) {
+    public NodeError(String description) {
         this(description, null);
     }
 
-    public DecompileError(String description, @Nullable ASTNode node) {
+    public NodeError(String description, @Nullable ASTNode node) {
         this.description = description;
         this.node = node;
     }
