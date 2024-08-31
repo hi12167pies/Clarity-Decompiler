@@ -1,14 +1,14 @@
 package cf.pies.decompiler.decompile.node;
 
 import cf.pies.decompiler.decompile.CodeDecompiler;
-import cf.pies.decompiler.decompile.NodeHandler;
+import cf.pies.decompiler.decompile.NodeDecompileHandler;
 import com.google.common.collect.Sets;
 import me.kuwg.clarity.ast.ASTNode;
 import me.kuwg.clarity.ast.nodes.expression.BinaryExpressionNode;
 
 import java.util.Set;
 
-public class BinaryExpressionCreator implements NodeHandler {
+public class BinaryExpressionCreator implements NodeDecompileHandler {
     @Override
     public Set<Class<?>> getSupportedNodes() {
         return Sets.newHashSet(

@@ -4,7 +4,7 @@ import me.kuwg.clarity.ast.ASTNode;
 
 import java.util.Set;
 
-public interface NodeHandler {
+public interface NodeDecompileHandler {
     /**
      * @return A list of nodes that the handler supports
      */

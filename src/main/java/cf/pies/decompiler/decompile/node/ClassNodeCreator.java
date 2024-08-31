@@ -1,16 +1,17 @@
 package cf.pies.decompiler.decompile.node;
 
 import cf.pies.decompiler.decompile.CodeDecompiler;
-import cf.pies.decompiler.decompile.NodeHandler;
+import cf.pies.decompiler.decompile.NodeDecompileHandler;
 import com.google.common.collect.Sets;
 import me.kuwg.clarity.ast.ASTNode;
 import me.kuwg.clarity.ast.nodes.clazz.ClassDeclarationNode;
 import me.kuwg.clarity.ast.nodes.clazz.ClassInstantiationNode;
 import me.kuwg.clarity.ast.nodes.clazz.NativeClassDeclarationNode;
+import me.kuwg.clarity.ast.nodes.function.declare.FunctionDeclarationNode;
 
 import java.util.Set;
 
-public class ClassNodeCreator implements NodeHandler {
+public class ClassNodeCreator implements NodeDecompileHandler {
     @Override
     public Set<Class<?>> getSupportedNodes() {
         return Sets.newHashSet(
@@ -28,8 +29,10 @@ public class ClassNodeCreator implements NodeHandler {
             code.append("class ").append(node.getName())
                     .openBlock();
 
-            if (node.getConstructor() != null) {
-                code.handleNode(node.getConstructor());
+            if (node.getConstructors() != null) {
+                for (FunctionDeclarationNode constructor : node.getConstructors()) {
+                    code.handleNode(constructor);
+                }
             }
 
             code.handleNode(node.getBody());
@@ -43,8 +46,10 @@ public class ClassNodeCreator implements NodeHandler {
             code.append("class native ").append(node.getName())
                     .openBlock();
 
-            if (node.getConstructor() != null) {
-                code.handleNode(node.getConstructor());
+            if (node.getConstructors() != null) {
+                for (FunctionDeclarationNode constructor : node.getConstructors()) {
+                    code.handleNode(constructor);
+                }
             }
 
             code.handleNode(node.getBody());

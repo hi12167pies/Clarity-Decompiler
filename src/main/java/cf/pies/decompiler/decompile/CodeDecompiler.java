@@ -16,12 +16,12 @@ public class CodeDecompiler {
         this.guiData = guiData;
     }
 
-    private List<NodeHandler> nodeHandlers = new ArrayList<>();
+    private List<NodeDecompileHandler> nodeHandlers = new ArrayList<>();
     private int indentAmount = 0;
     private final StringBuilder builder = new StringBuilder();
     private final List<DecompileError> errors = new ArrayList<>();
 
-    public void setNodeHandlers(List<NodeHandler> nodeHandlers) {
+    public void setNodeHandlers(List<NodeDecompileHandler> nodeHandlers) {
         this.nodeHandlers = nodeHandlers;
     }
 
@@ -121,7 +121,7 @@ public class CodeDecompiler {
 
         previousLine = node.getLine();
 
-        for (NodeHandler nodeHandler : nodeHandlers) {
+        for (NodeDecompileHandler nodeHandler : nodeHandlers) {
             for (Class<?> supportedNode : nodeHandler.getSupportedNodes()) {
 
                 if (supportedNode.isInstance(node)) {

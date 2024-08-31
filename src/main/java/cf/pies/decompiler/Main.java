@@ -1,6 +1,6 @@
 package cf.pies.decompiler;
 
-import cf.pies.decompiler.decompile.NodeHandler;
+import cf.pies.decompiler.decompile.NodeDecompileHandler;
 import cf.pies.decompiler.decompile.node.*;
 import cf.pies.decompiler.gui.SwingGui;
 import cf.pies.decompiler.gui.menu.ASTViewMenu;
@@ -12,7 +12,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 public class Main {
-    private static final List<NodeHandler> handlers = Lists.newArrayList(
+    private static final List<NodeDecompileHandler> handlers = Lists.newArrayList(
             new BlockNodeCreator(),
             new FunctionNodeCreator(),
             new NativeNodeCreator(),
@@ -27,7 +27,7 @@ public class Main {
     /**
      * @return A list of default node handlers for decompiling
      */
-    public static List<NodeHandler> getDefaultNodeHandlers() {
+    public static List<NodeDecompileHandler> getDefaultNodeHandlers() {
         return handlers;
     }
 
