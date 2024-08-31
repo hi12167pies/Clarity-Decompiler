@@ -29,7 +29,6 @@ public class SwingGui {
         FlatLaf.setup(new FlatDarkLaf());
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        // give tabs dark look
         tabs.addChangeListener(event -> {
             if (menus.size() <= tabs.getSelectedIndex()) return;
             Menu menu = menus.get(tabs.getSelectedIndex());
